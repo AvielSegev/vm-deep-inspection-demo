@@ -125,14 +125,14 @@ type VMSnapshot struct {
 
 // VMResourceInfo represents resource allocation information
 type VMResourceInfo struct {
-	CPUReservationMHz    int64  `json:"cpu_reservation_mhz" example:"1000"`
-	CPULimitMHz          int64  `json:"cpu_limit_mhz,omitempty" example:"4000"`
-	CPUShares            int32  `json:"cpu_shares" example:"1000"`
-	CPUSharesLevel       string `json:"cpu_shares_level" example:"normal"`
-	MemoryReservationMB  int64  `json:"memory_reservation_mb" example:"2048"`
-	MemoryLimitMB        int64  `json:"memory_limit_mb,omitempty" example:"8192"`
-	MemoryShares         int32  `json:"memory_shares" example:"10240"`
-	MemorySharesLevel    string `json:"memory_shares_level" example:"normal"`
+	CPUReservationMHz   int64  `json:"cpu_reservation_mhz" example:"1000"`
+	CPULimitMHz         int64  `json:"cpu_limit_mhz,omitempty" example:"4000"`
+	CPUShares           int32  `json:"cpu_shares" example:"1000"`
+	CPUSharesLevel      string `json:"cpu_shares_level" example:"normal"`
+	MemoryReservationMB int64  `json:"memory_reservation_mb" example:"2048"`
+	MemoryLimitMB       int64  `json:"memory_limit_mb,omitempty" example:"8192"`
+	MemoryShares        int32  `json:"memory_shares" example:"10240"`
+	MemorySharesLevel   string `json:"memory_shares_level" example:"normal"`
 }
 
 // VMStorageSummary represents storage summary information
@@ -159,10 +159,10 @@ type VMLocationInfo struct {
 
 // VMAdvancedInfo represents advanced VM settings
 type VMAdvancedInfo struct {
-	CPUHotAddEnabled      bool   `json:"cpu_hot_add_enabled" example:"false"`
-	CPUHotRemoveEnabled   bool   `json:"cpu_hot_remove_enabled" example:"false"`
-	MemoryHotAddEnabled   bool   `json:"memory_hot_add_enabled" example:"false"`
-	ChangeTrackingEnabled bool   `json:"change_tracking_enabled" example:"false"`
+	CPUHotAddEnabled      bool `json:"cpu_hot_add_enabled" example:"false"`
+	CPUHotRemoveEnabled   bool `json:"cpu_hot_remove_enabled" example:"false"`
+	MemoryHotAddEnabled   bool `json:"memory_hot_add_enabled" example:"false"`
+	ChangeTrackingEnabled bool `json:"change_tracking_enabled" example:"false"`
 }
 
 // VMDetailsResponse represents detailed information about a single VM
@@ -226,14 +226,14 @@ type VMSummary struct {
 
 // VMStatsResponse represents VM performance statistics
 type VMStatsResponse struct {
-	UUID        string            `json:"uuid" example:"502e7c6e-b5c3-4d0e-9a5a-8b9c1d2e3f4g"`
-	Name        string            `json:"name" example:"web-server-01"`
-	Timestamp   time.Time         `json:"timestamp" example:"2024-01-15T14:30:00Z"`
-	CPUUsage    VMCPUStats        `json:"cpu_usage"`
-	MemoryUsage VMMemoryStats     `json:"memory_usage"`
-	DiskUsage   VMDiskStats       `json:"disk_usage"`
-	NetworkUsage VMNetworkStats   `json:"network_usage"`
-	Uptime      int64             `json:"uptime_seconds" example:"86400"`
+	UUID         string         `json:"uuid" example:"502e7c6e-b5c3-4d0e-9a5a-8b9c1d2e3f4g"`
+	Name         string         `json:"name" example:"web-server-01"`
+	Timestamp    time.Time      `json:"timestamp" example:"2024-01-15T14:30:00Z"`
+	CPUUsage     VMCPUStats     `json:"cpu_usage"`
+	MemoryUsage  VMMemoryStats  `json:"memory_usage"`
+	DiskUsage    VMDiskStats    `json:"disk_usage"`
+	NetworkUsage VMNetworkStats `json:"network_usage"`
+	Uptime       int64          `json:"uptime_seconds" example:"86400"`
 }
 
 // VMCPUStats represents CPU usage statistics
@@ -254,11 +254,11 @@ type VMMemoryStats struct {
 
 // VMDiskStats represents disk I/O statistics
 type VMDiskStats struct {
-	ReadIOPS     int64 `json:"read_iops" example:"150"`
-	WriteIOPS    int64 `json:"write_iops" example:"75"`
-	ReadMBps     float64 `json:"read_mbps" example:"12.5"`
-	WriteMBps    float64 `json:"write_mbps" example:"8.3"`
-	LatencyMS    float64 `json:"latency_ms" example:"2.1"`
+	ReadIOPS  int64   `json:"read_iops" example:"150"`
+	WriteIOPS int64   `json:"write_iops" example:"75"`
+	ReadMBps  float64 `json:"read_mbps" example:"12.5"`
+	WriteMBps float64 `json:"write_mbps" example:"8.3"`
+	LatencyMS float64 `json:"latency_ms" example:"2.1"`
 }
 
 // VMNetworkStats represents network I/O statistics
@@ -301,4 +301,12 @@ type SnapshotCreateResponse struct {
 	Status      string `json:"status" example:"completed"`
 	Message     string `json:"message" example:"Snapshot created successfully"`
 	CreatedTime string `json:"created_time,omitempty" example:"2024-01-15T14:30:00Z"`
+}
+
+// SnapshotDeleteResponse represents the response for snapshot deletion
+type SnapshotDeleteResponse struct {
+	SnapshotName string `json:"snapshot_name" example:"snapshot-123"`
+	VMName       string `json:"vm_name" example:"web-server-01"`
+	Status       string `json:"status" example:"completed"`
+	Message      string `json:"message" example:"Snapshot deleted successfully"`
 }

@@ -12,10 +12,10 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/kubev2v/vm-migration-detective/pkg/persistent"
-	"github.com/nirarg/vm-deep-inspection-demo/internal/api"
 	"github.com/nirarg/vm-deep-inspection-demo/internal/config"
+	vmhandler "github.com/nirarg/vm-deep-inspection-demo/internal/handlers/vms"
+	vmSvc "github.com/nirarg/vm-deep-inspection-demo/internal/service/vms"
 	"github.com/nirarg/vm-deep-inspection-demo/internal/storage"
-	"github.com/nirarg/vm-deep-inspection-demo/internal/vmware"
 	"github.com/sirupsen/logrus"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -30,7 +30,7 @@ import (
 
 // @title VM Deep Inspection Demo API
 // @version 0.1
-// @description A Go service for investigating "Deep inspection" of VMs in VMware vSphere 
+// @description A Go service for investigating "Deep inspection" of VMs in VMware vSphere
 // @host localhost:8080
 // @BasePath /
 // @schemes http https
@@ -61,7 +61,7 @@ func main() {
 	}
 
 	// Initialize VMware client
-	vmwareClient := vmware.NewClient(cfg.VMware, log)
+	vmwareClient := vmSvc.NewClient(cfg.VMware, log)
 
 	// Connect to vCenter
 	ctx := context.Background()
@@ -72,7 +72,7 @@ func main() {
 	}
 
 	// Initialize VMware services
-	vmService := vmware.NewVMService(vmwareClient, log)
+	vmService := vmSvc.NewService(vmwareClient, log)
 
 	// Initialize database connection
 	db, err := initDatabase(cfg.Database, log)
@@ -98,8 +98,8 @@ func main() {
 		Password:   cfg.VMware.Password,
 	}
 	inspector := persistent.NewInspector(
-		"",    // virt-inspector path (uses system PATH)
-		"",    // virt-v2v-inspector path (uses system PATH)
+		"",             // virt-inspector path (uses system PATH)
+		"",             // virt-v2v-inspector path (uses system PATH)
 		30*time.Minute, // timeout
 		credentials,
 		log,
@@ -107,7 +107,7 @@ func main() {
 	)
 
 	// Initialize handlers
-	vmHandler := api.NewVMHandler(vmService, vmwareClient, inspector, log)
+	vmHandler := vmhandler.NewVMHandler(vmService, vmwareClient, inspector, log)
 
 	// Setup router
 	router := gin.Default()
@@ -129,7 +129,8 @@ func main() {
 		// VM routes
 		v1.GET("/vms", vmHandler.ListVMs)
 		v1.GET("/vms/:name", vmHandler.GetVM)
-		v1.POST("/vms/snapshot", vmHandler.CreateVMSnapshot)
+		v1.POST("/vms/:name/snapshot", vmHandler.CreateVMSnapshot)
+		v1.DELETE("/vms/:name/snapshot/:snapshotName", vmHandler.RemoveVMSnapshot)
 
 		// Clone and inspection routes
 		v1.POST("/vms/clone", vmHandler.CreateClone)

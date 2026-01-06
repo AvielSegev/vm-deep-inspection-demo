@@ -1,4 +1,4 @@
-package vmware
+package vms
 
 import (
 	"context"
