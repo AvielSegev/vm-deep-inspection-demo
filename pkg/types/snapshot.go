@@ -21,12 +21,12 @@ type SnapshotResponse struct {
 
 // TaskStatusResponse represents the status of a snapshot task
 type TaskStatusResponse struct {
-	TaskID     string    `json:"task_id" example:"task-456"`
-	Status     string    `json:"status" example:"success"`
-	Progress   int       `json:"progress" example:"100"`
-	SnapshotID string    `json:"snapshot_id,omitempty" example:"snapshot-789"`
-	Message    string    `json:"message,omitempty" example:"Snapshot creation completed"`
-	StartTime  time.Time `json:"start_time" example:"2024-01-01T10:00:00Z"`
+	TaskID     string     `json:"task_id" example:"task-456"`
+	Status     string     `json:"status" example:"success"`
+	Progress   int        `json:"progress" example:"100"`
+	SnapshotID string     `json:"snapshot_id,omitempty" example:"snapshot-789"`
+	Message    string     `json:"message,omitempty" example:"Snapshot creation completed"`
+	StartTime  time.Time  `json:"start_time" example:"2024-01-01T10:00:00Z"`
 	EndTime    *time.Time `json:"end_time,omitempty" example:"2024-01-01T10:05:00Z"`
 }
 
