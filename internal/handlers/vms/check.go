@@ -84,8 +84,8 @@ func (h *VMHandler) RunCheck(c *gin.Context) {
 	}
 
 	// Get vCenter credentials from vmClient
-	vcenterURL := h.vmClient.GetVCenterURL()
-	username, password := h.vmClient.GetCredentials()
+	vcenterURL := h.vmService.GetVCenterURL()
+	username, password := h.vmService.GetCredentials()
 
 	// Create inspection params
 	params := checks.InspectionParams{

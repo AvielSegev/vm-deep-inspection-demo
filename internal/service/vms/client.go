@@ -224,17 +224,3 @@ func (c *Client) GetConfig() config.VMwareConfig {
 	defer c.mutex.RUnlock()
 	return c.config
 }
-
-// GetVCenterURL returns the vCenter URL
-func (c *Client) GetVCenterURL() string {
-	c.mutex.RLock()
-	defer c.mutex.RUnlock()
-	return c.config.VCenterURL
-}
-
-// GetCredentials returns the vCenter username and password
-func (c *Client) GetCredentials() (string, string) {
-	c.mutex.RLock()
-	defer c.mutex.RUnlock()
-	return c.config.Username, c.config.Password
-}

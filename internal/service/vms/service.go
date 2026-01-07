@@ -59,3 +59,17 @@ func (s *Service) findVMByName(ctx context.Context, name string) (*object.Virtua
 
 	return vm, datacenter, nil
 }
+
+// GetVCenterURL returns the vCenter URL
+func (s *Service) GetVCenterURL() string {
+	s.client.mutex.RLock()
+	defer s.client.mutex.RUnlock()
+	return s.client.config.VCenterURL
+}
+
+// GetCredentials returns the vCenter username and password
+func (s *Service) GetCredentials() (string, string) {
+	s.client.mutex.RLock()
+	defer s.client.mutex.RUnlock()
+	return s.client.config.Username, s.client.config.Password
+}

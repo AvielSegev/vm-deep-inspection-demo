@@ -107,7 +107,7 @@ func main() {
 	)
 
 	// Initialize handlers
-	vmHandler := vmhandler.NewVMHandler(vmService, vmwareClient, inspector, log)
+	vmHandler := vmhandler.NewVMHandler(vmService, inspector, log)
 
 	// Setup router
 	router := gin.Default()
